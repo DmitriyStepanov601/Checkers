@@ -1,8 +1,14 @@
 package checkers;
+
+import logic.Coordinate;
+import state.KingState;
+import state.NormalStateWhite;
+
 import javax.swing.*;
 
 /**
  * A class describing a white checker
+ *
  * @author Dmitriy Stepanov
  */
 public class WhiteChecker extends CheckerPosition {
@@ -16,6 +22,7 @@ public class WhiteChecker extends CheckerPosition {
     public int getColor() {
         return WHITE;
     }
+
     public ImageIcon getIcon() {
         return null;
     }
@@ -29,6 +36,7 @@ public class WhiteChecker extends CheckerPosition {
     public boolean kingRow() {
         return ((position.get() >= 1) && (position.get() <= 4));
     }
+
     public boolean isKing() {
         return (value == WHITE_VALUE_KING);
     }
