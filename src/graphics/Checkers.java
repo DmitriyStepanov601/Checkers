@@ -1,5 +1,10 @@
 package graphics;
-import checkers.*;
+
+import board.Board;
+import checkers.CheckerPosition;
+import logic.*;
+import move.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * A class that describes the game's graphical interface
+ *
  * @author Dmitriy Stepanov
  */
 public class Checkers extends JFrame implements MouseListener, MouseMotionListener {
@@ -36,6 +42,7 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
 
     /**
      * Constructor - creating a new game
+     *
      * @see Checkers#Checkers()
      */
     public Checkers() {
@@ -59,7 +66,7 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
         setVisible(true);
     }
 
-    public static BufferedImage loadImage(String path){
+    public static BufferedImage loadImage(String path) {
         try {
             return ImageIO.read(Checkers.class.getResource(path));
         } catch (IOException e) {
@@ -103,7 +110,7 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
         algorithmGroup.add(rbMiniMax);
         algorithmGroup.add(rbMiniMaxAB);
 
-        if(Checkers.algorithm == 1) {
+        if (Checkers.algorithm == 1) {
             rbMiniMax.setSelected(true);
             rbMiniMaxAB.setSelected(false);
         } else {
@@ -132,7 +139,7 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
                 ThemesCombo.setSelectedIndex(2);
             }
 
-            final JComponent[] inputs = new JComponent[]{ new JLabel("Styles Background"), ThemesCombo };
+            final JComponent[] inputs = new JComponent[]{new JLabel("Styles Background"), ThemesCombo};
             JOptionPane.showMessageDialog(Checkers.this, inputs, "Background",
                     JOptionPane.PLAIN_MESSAGE);
 
@@ -215,7 +222,7 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
             ArrayList<String> filename = new ArrayList<>();
             JComboBox<String> comboTypesList = new JComboBox<>(comboTypes);
 
-            final JComponent[] inputs = new JComponent[]{ new JLabel("FileName"), comboTypesList };
+            final JComponent[] inputs = new JComponent[]{new JLabel("FileName"), comboTypesList};
             JOptionPane.showMessageDialog(Checkers.this, inputs,
                     "Import a game", JOptionPane.PLAIN_MESSAGE);
             importGameFromSavegames(comboTypesList.getSelectedItem().toString());
@@ -226,17 +233,17 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
             System.out.println("export Game");
             JTextField fileName = new JTextField();
 
-            final JComponent[] inputs = new JComponent[]{ new JLabel("FileName"), fileName };
+            final JComponent[] inputs = new JComponent[]{new JLabel("FileName"), fileName};
             JOptionPane.showMessageDialog(Checkers.this, inputs,
                     "Export a game", JOptionPane.PLAIN_MESSAGE);
 
-            if(fileName.getText().compareTo("") != 0){
+            if (fileName.getText().compareTo("") != 0) {
                 try {
                     SaveHistoryOfGame(fileName.getText());
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-            } else{
+            } else {
                 System.out.println("no name file entered");
             }
         });
@@ -298,7 +305,8 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -329,10 +337,12 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -361,7 +371,8 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {}
+    public void mouseMoved(MouseEvent e) {
+    }
 
     public void moveUser(Coordinate from, Coordinate to) {
         pan.turn = "your turn";
@@ -388,23 +399,22 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
             } else {
                 computerMoves();
             }
-        } else
-         if (GameSearch.existJump(pan.boardO, userColor)) {
-                outputText("Invalid move. If you can jump, you must.");
-            } else {
-                if (isBack) {
-                    removeBoardsAfter(currentPositionInBoardHistory + 1);
-                    isBack = false;
-                    currentPositionInBoardHistory = boardHistory.size() + 1;
-                } else if (boardHistory.size() == 0) {
-                    currentPositionInBoardHistory = 0;
-                    boardHistory.add(pan.boardO);
-                }
-
-                pan.boardO = GameSearch.executeMove(move, pan.boardO);
-                pan.user_move = move.toString();
-                computerMoves();
+        } else if (GameSearch.existJump(pan.boardO, userColor)) {
+            outputText("Invalid move. If you can jump, you must.");
+        } else {
+            if (isBack) {
+                removeBoardsAfter(currentPositionInBoardHistory + 1);
+                isBack = false;
+                currentPositionInBoardHistory = boardHistory.size() + 1;
+            } else if (boardHistory.size() == 0) {
+                currentPositionInBoardHistory = 0;
+                boardHistory.add(pan.boardO);
             }
+
+            pan.boardO = GameSearch.executeMove(move, pan.boardO);
+            pan.user_move = move.toString();
+            computerMoves();
+        }
     }
 
     public Move validateUserMove(Coordinate from, Coordinate to) {
@@ -422,13 +432,13 @@ public class Checkers extends JFrame implements MouseListener, MouseMotionListen
                         move = new MoveJump(checker, to);
                     }
                 } else // Normal white checker.
-                 if (from.row() - to.row() == 1) {
-                     if (GameSearch.validWhiteMove(from, to, pan.boardO)) {
-                         move = new MoveNormal(checker, to);
-                     }
-                 } else if (GameSearch.validWhiteJump(from, to, pan.boardO)) {
-                     move = new MoveJump(checker, to);
-                 }
+                    if (from.row() - to.row() == 1) {
+                        if (GameSearch.validWhiteMove(from, to, pan.boardO)) {
+                            move = new MoveNormal(checker, to);
+                        }
+                    } else if (GameSearch.validWhiteJump(from, to, pan.boardO)) {
+                        move = new MoveJump(checker, to);
+                    }
             }
         }
         return move;

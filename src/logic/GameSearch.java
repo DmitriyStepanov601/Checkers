@@ -1,7 +1,18 @@
-package checkers;
+package logic;
+
+import board.Board;
+import board.BoardList;
+import checkers.BlackChecker;
+import checkers.CheckerPosition;
+import checkers.WhiteChecker;
+import move.Move;
+import move.MoveIterator;
+import move.MoveJump;
+import move.MoveList;
 
 /**
  * A class that describes the algorithm for moving checkers
+ *
  * @author Dmitriy Stepanov
  */
 public class GameSearch {         // algorithm Minimax

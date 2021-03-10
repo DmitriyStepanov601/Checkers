@@ -1,8 +1,10 @@
-package checkers;
+package logic;
+
 import java.io.Serializable;
 
 /**
  * A class that describes the coordinates of the checkers
+ *
  * @author Dmitriy Stepanov
  */
 public class Coordinate implements Serializable {
@@ -10,6 +12,7 @@ public class Coordinate implements Serializable {
 
     /**
      * Constructor - creating a new coordinate
+     *
      * @param c - coordinate
      * @see Coordinate#Coordinate(int)
      */
@@ -19,6 +22,7 @@ public class Coordinate implements Serializable {
 
     /**
      * Constructor - creating a new coordinate
+     *
      * @see Coordinate#Coordinate()
      */
     public Coordinate() {
@@ -28,6 +32,7 @@ public class Coordinate implements Serializable {
     public int get() {
         return c;
     }
+
     public boolean equals(Coordinate d) {
         return (c == d.get());
     }
@@ -90,12 +95,15 @@ public class Coordinate implements Serializable {
     public Coordinate upLeftJump() {
         return new Coordinate(c - 9);
     }
+
     public Coordinate upRightJump() {
         return new Coordinate(c - 7);
     }
+
     public Coordinate downLeftJump() {
         return new Coordinate(c + 7);
     }
+
     public Coordinate downRightJump() {
         return new Coordinate(c + 9);
     }

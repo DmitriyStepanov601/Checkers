@@ -1,12 +1,15 @@
 package graphics;
-import checkers.Board;
-import checkers.Coordinate;
+
+import board.Board;
+import logic.Coordinate;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * A class that describes a game board
+ *
  * @author Dmitriy Stepanov
  */
 public class CheckersBoard extends JPanel {
@@ -45,6 +48,7 @@ public class CheckersBoard extends JPanel {
 
     /**
      * Constructor - creating a new game board
+     *
      * @see CheckersBoard#CheckersBoard()
      */
     public CheckersBoard() {
